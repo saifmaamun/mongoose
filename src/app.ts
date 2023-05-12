@@ -1,6 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors"
-import { Schema } from "mongoose";
+import { Schema,model } from "mongoose";
 
 
 
@@ -21,12 +21,14 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/', (req:Request, res:Response, next:NextFunction) => {
 // insert a data
     /*
-    step1: interface
-    step2: Schema
+    step1: interface done
+    step2: Schema done
     step3: Model
     step4: DataBase Query
     */
-    // creating interface
+
+
+// step 1.  creating interface
 interface IUser{
     id:string;
     role:"Student";
@@ -51,33 +53,34 @@ interface IUser{
 // 2. Create a Schema corresponding to the document interface.
 const userSchema = new Schema<IUser>({
     
-id:{
-    type:String,
-    required:true,
-},
-role:{
-    type:String,
-    required:true
-},
-password:{
-    type:String,
-    required:true,
-},
-name:{
-    firstName:{
-        type: String,
+    id:{
+        type:String,
         required:true,
+        unique:true,
     },
-    middleName:{
-        type: String,
+    role:{
+        type:String,
+        required:true
     },
-    lastName:{
+    password:{
         type:String,
         required:true,
     },
-},
-dateOfBirth:{
-    type:String,
+    name:{
+        firstName:{
+            type: String,
+            required:true,
+        },
+        middleName:{
+            type: String,
+        },
+        lastName:{
+            type:String,
+            required:true,
+        },
+    },
+    dateOfBirth:{
+        type:String,
     required:true,
 },
 gender:{
@@ -103,13 +106,40 @@ permanentAddress:{
     type:String,
     required:true,
 },
-  });
-    
+});
 
 
+// 3. Create a model.
+const User = model<IUser>('User', userSchema);
+
+
+// 4. Database 
+const userToDB = async()=>{
+    const user = new User({
+        id:'Mk15',
+        role:"Student",
+        password:'kajida',
+        name:{
+            firstName:'Masud',
+            middleName:'Rana',
+            lastName:'maamun',
+        },
+        dateOfBirth:'4/5/23',
+        gender: "male",
+        email:'saif@gmail.com',
+        contactNumber: '01245698745',
+        emergencyContactNumber:'013547859634',
+        presentAddress: 'Dhaka',
+        permanentAddress: 'Noakhali',
+      });
+      await user.save();
+    console.log(user)
+} 
+userToDB()
 
 
 })
+
 
 
 
