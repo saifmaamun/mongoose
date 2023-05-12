@@ -114,7 +114,7 @@ const User = model<IUser>('User', userSchema);
 // 4. Database 
 const userToDB = async()=>{
     const user = new User({
-        id:'0147',
+        id:'12',
         role:"Student",
         password:'kajida',
         name:{
@@ -134,6 +134,7 @@ const userToDB = async()=>{
     console.log(user)
 } 
 userToDB()
+res.send('Hello World!')
 
 
 })
