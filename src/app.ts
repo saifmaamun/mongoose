@@ -1,15 +1,15 @@
-import express from "express";
+import express, { Application, Request, Response } from "express";
 import cors from "cors"
 
 
 
-const app = express()
+const app:Application = express()
 
 
 // using cors
 app.use(cors())
 
-app.get('/', (req, res) => {
+app.get('/', (req:Request, res:Response) => {
   res.send('Hello World!')
 })
 
