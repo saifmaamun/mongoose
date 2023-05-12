@@ -28,7 +28,7 @@ app.get('/', (req:Request, res:Response, next:NextFunction) => {
     */
 
 
-// step 1.  creating interface
+// 1.  creating interface
 interface IUser{
     id:string;
     role:"Student";
@@ -46,8 +46,6 @@ interface IUser{
     presentAddress: string;
     permanentAddress: string;
 }
-
-
 
 
 // 2. Create a Schema corresponding to the document interface.
@@ -116,7 +114,7 @@ const User = model<IUser>('User', userSchema);
 // 4. Database 
 const userToDB = async()=>{
     const user = new User({
-        id:'Mk15',
+        id:'0147',
         role:"Student",
         password:'kajida',
         name:{
@@ -139,20 +137,6 @@ userToDB()
 
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export default app;
