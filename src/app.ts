@@ -1,11 +1,12 @@
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, { Application} from "express";
 import cors from "cors"
-import { Schema,model } from "mongoose";
-
 
 
 const app:Application = express()
 
+
+// application routes
+import userRoutes from "./app/modules/user/user.route";
 
 // using cors
 app.use(cors())
@@ -18,126 +19,24 @@ app.use(express.urlencoded({ extended: true }))
 
 
 
-app.get('/', (req:Request, res:Response, next:NextFunction) => {
 // insert a data
     /*
     step1: interface done
     step2: Schema done
-    step3: Model
-    step4: DataBase Query
+    step3: Model done
+    step4: DataBase Query on Model done
     */
+    /*
+    create a folder named app
+    interface ==> user.interface.ts
+    model and schema ==> user.model.ts
+    route, route function ==> user.controller.ts
 
+    database query function ==> user.server.ts
 
-// 1.  creating interface
-interface IUser{
-    id:string;
-    role:"Student";
-    password:string;
-    name:{
-        firstName:string;
-        middleName?:string;
-        lastName:string;
-    };
-    dateOfBirth:string;
-    gender: "male"|"female";
-    email?:string;
-    contactNumber: string;
-    emergencyContactNumber: string;
-    presentAddress: string;
-    permanentAddress: string;
-}
-
-
-// 2. Create a Schema corresponding to the document interface.
-const userSchema = new Schema<IUser>({
-    
-    id:{
-        type:String,
-        required:true,
-        unique:true,
-    },
-    role:{
-        type:String,
-        required:true
-    },
-    password:{
-        type:String,
-        required:true,
-    },
-    name:{
-        firstName:{
-            type: String,
-            required:true,
-        },
-        middleName:{
-            type: String,
-        },
-        lastName:{
-            type:String,
-            required:true,
-        },
-    },
-    dateOfBirth:{
-        type:String,
-    required:true,
-},
-gender:{
-    type:String,
-    enum: ["male","female"]
-},
-email:{
-    type: String,
-},
-contactNumber:{
-    type:String,
-    required:true,
-},
-emergencyContactNumber:{
-    type:String,
-    required:true,
-},
-presentAddress:{
-    type:String,
-    required:true,
-},
-permanentAddress:{
-    type:String,
-    required:true,
-},
-});
-
-
-// 3. Create a model.
-const User = model<IUser>('User', userSchema);
-
-
-// 4. Database 
-const userToDB = async()=>{
-    const user = new User({
-        id:'2',
-        role:"Student",
-        password:'kajida',
-        name:{
-            firstName:'gorib',
-            middleName:'Rana',
-            lastName:'maamun',
-        },
-        dateOfBirth:'4/5/23',
-        gender: "male",
-        email:'saif@gmail.com',
-        contactNumber: '01245698745',
-        emergencyContactNumber:'013547859634',
-        presentAddress: 'Dhaka',
-        permanentAddress: 'Noakhali',
-      });
-      await user.save();
-    console.log(user)
-} 
-userToDB()
-res.send('Hello World!')
-
-
-})
+    */
+// app.get('/api/v1/user', userRoutes)
+app.use('/api/v1/user', userRoutes)
 
 
 export default app;
