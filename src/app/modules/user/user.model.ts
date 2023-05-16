@@ -1,10 +1,10 @@
 import { Model, Schema, model } from "mongoose";
-import { IUser, IUserMethods } from "./user.interface";
+import { IUser, IUserMethods, UserModel } from "./user.interface";
 
 
 
 // Create a new Model type that knows about IUserMethods...
-type UserModel = Model<IUser, {}, IUserMethods>;
+// type UserModel = Model<IUser, {}, IUserMethods>;  //uncomment this line 
 
 
 // 2. Create a Schema corresponding to the document interface.
@@ -65,8 +65,15 @@ permanentAddress:{
 },
 });
 
+userSchema.static('getAdminUsers', async function getAdminUsers() {
+    const admins = await this.find({role:'teacher'})
+    return admins;
+  });
 
-userSchema.method('fullName', function fullName() {
+
+
+
+userSchema.method('fullName', function fullName():string {
     return this.name.firstName + ' ' + this.name.lastName;
   });
 
